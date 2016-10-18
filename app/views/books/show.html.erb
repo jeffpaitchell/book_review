@@ -1,0 +1,41 @@
+<div class="row">
+
+	<div class="col-md-4">
+
+		<!-- Add this 'image_tag' line below to show the image of the book in the show HTML page -->
+		<%= image_tag @book.book_img.url(:book_show), class: "book-show" %>
+	</div>
+
+	<div class="col-md-8">
+		<h2><%= @book.title %></h2>
+		<h3><%= @book.author %></h3>
+		<h4>Category: <%= @book.category.name %></h4>
+		<p><%= @book.description %></p>
+	</div>
+
+</div>
+
+<!-- Add another column where the reviews/ratings will go -->
+<div class="row">
+
+	<div class="col-md-4">
+
+	</div>
+
+</div>
+
+<!-- Add link to take user back -->
+<%= link_to "Back", root_path %>
+
+
+<!-- Add a conditional to see if the user is actually signed in or not and so that only the user who created this book can actually edit and/or delete it.  This can be easily checked by clicking on a book that the currently logged in user did not create.-->
+
+<% if user_signed_in? %>
+
+	<% if @book.user_id == current_user.id %>
+
+		<!-- Add links to Edit and Delete -->
+		<%= link_to "Edit", edit_book_path(@book) %>
+		<%= link_to "Delete", book_path(@book), method: :delete, data: { confirm: "Are you sure?" } %>
+	<% end %>
+<% end %>		
